@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web:400,600");
+@import url("https://fonts.googleapis.com/css?family=Inconsolata");
+
+html {
+    font-size: 20px;
+}
+
+body {
+    font-family: "Titillium Web", sans-serif;
+    font-size: 1rem;
+    margin: 0.25rem;
+    background-color: #222;
+    color: #ccc;
+}
+
+.key {
+    font-family: Inconsolata, monospace;
+}
+
+td > select {
+    width: 6rem;
+}
+
+input[type=number] {
+    width: 3rem;
+}
+
+th {
+    color: #8bc34a;
+}
