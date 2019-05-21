@@ -1,6 +1,8 @@
 # m4st3rk3y Password Manager
 m4st3rk3y is a password manager generating reproducible random passwords for your services such as online accounts. It employs [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) and a user-specific configuration containing a list of service names with an iteration count and a password pattern each.
 
+![Screenshot of the m4st3rk3y Application](gfx/m4st3rk3y-screenshot.png)
+
 ## Advantages
 * The m4st3rk3y application and your configuration file may be hosted publicly. Thus, they can be made accessible due to the possibility of replication.
 * Key management can be performed completely offline. Your master secret does not need to be transferred over the network.
