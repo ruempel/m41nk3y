@@ -178,14 +178,31 @@ function computeAndRenderServiceKey(keyBytes, service, table) {
     jQuery("<td/>").append(count).appendTo(row);
 
     // management buttons
+    const qrcodeButton = jQuery("<button/>")
+        .addClass("btn btn-light")
+        .attr({type: "button", "data-toggle": "tooltip", title: "Show QR Code"})
+        .html("<i class='fas fa-qrcode'></i>");
+
+    qrcodeButton.click(() => {
+        // create QR code
+        let qr = qrcode(4, "M"); // type number and error correction level
+        qr.addData(serviceKey);
+        qr.make();
+
+        jQuery("div#qrcode").remove(); // remove old modals to prevent memory leak
+        jQuery("<div/>").addClass("modal")
+            .attr({tabindex: -1, role: "dialog", id: "qrcode"})
+            .html(qr.createSvgTag({cellSize: 4})).modal("show");
+    });
+
     const deleteButton = jQuery("<button/>")
-        .addClass("btn btn-danger").attr("type", "button").html("<i class=\"fas fa-trash\"></i>");
+        .addClass("btn btn-danger").attr("type", "button").html("<i class='fas fa-trash'></i>");
     deleteButton.click(() => {
         Config.removeService(service.name);
         deriveServiceKeys();
         // TODO make removal action more smooth in terms of refreshing the table contents
     });
-    jQuery("<td/>").append(deleteButton).appendTo(row);
+    jQuery("<td/>").append(qrcodeButton).append(deleteButton).appendTo(row);
 }
 
 /**

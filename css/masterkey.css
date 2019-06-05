@@ -28,3 +28,7 @@ input[type=number] {
 th {
     color: #8bc34a;
 }
+
+#services td button.btn {
+    margin-right: 0.5rem;
+}

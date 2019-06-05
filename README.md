@@ -44,7 +44,7 @@ ATTENTION: All service keys are changed!
 * only one button on top
 * better promise chaining and event handling
 * smarter configuration file saving, upload, share, cloud store
-* hide keys per default, show only on request, auto-hide after some seconds, extra button for hidden copy action, show QR code (use offline-capable library)
+* hide keys per default, show only on request, auto-hide after some seconds, extra button for hidden copy action
 * filter table (jQuery data tables)
 * add instructions to use completely offline (incorporated libs)
 
