@@ -38,7 +38,7 @@ function registerListeners() {
         .change(importMasterKey) // re-import master key on each input string change
         .keypress(event => {
             decryptButton.removeClass("btn-success").addClass("btn-danger"); // switch to red color
-            if (event.charCode === 13)
+            if (event.key === "Enter")
                 importMasterKey().then(decryptConfig); // try decryption, when master key entered
         });
     decryptButton.click(decryptConfig); // try decryption, when button clicked
