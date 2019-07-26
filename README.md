@@ -15,6 +15,7 @@ m4st3rk3y is a password manager generating reproducible random passwords for you
 * The service configuration file is encrypted. One can only estimate the number of services included by the file size.
 * Processing is done within the Web browser as a standard application platform.
 * Password patterns fit to most service password requirements on length and character sets.
+* The application can be used offline as soon as the network resources are cached. It uses the Progressive Web Application (PWA) model employing a service worker.
 
 ## Disadvantages
 * With the m4st3rk3y application and the configuration file being public, the technology is vulnerable to offline brute force and dictionary attacks on your master secret. Of course, your option is to keep the configuration secret.
@@ -46,7 +47,6 @@ ATTENTION: All service keys are changed!
 * smarter configuration file saving, upload, share, cloud store
 * hide keys per default, show only on request, auto-hide after some seconds, extra button for hidden copy action
 * filter table (jQuery data tables)
-* add instructions to use completely offline (incorporated libs)
 
 # Example Configuration
 The services configuration is a JSON array. Each element of this array is a JSON object with the following structure:

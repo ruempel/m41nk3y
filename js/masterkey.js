@@ -6,6 +6,14 @@ import Converter from "./convert.js";
 import Config from "./serviceconfig.js";
 import Download from "./download.js";
 
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+        .register("serviceworker.js")
+        .then(() => {
+            console.log("service worker registered");
+        });
+}
+
 /**
  * Management of configurable service keys using a master password and PBKDF2.
  *
