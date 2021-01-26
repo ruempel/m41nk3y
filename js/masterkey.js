@@ -19,22 +19,21 @@ if ("serviceWorker" in navigator) {
  *
  * @author Andreas Rümpel <ruempel@gmail.com>
  */
-jQuery(function () {
-        // check for APIs
-        if (!window.crypto || !window.crypto.subtle || !window.TextEncoder || !window.TextDecoder) {
-            Logger.log("Browser lacks API support, get a new one");
-            return;
-        }
-
-        registerListeners();
-
-        // load config file contents into Config object
-        jQuery.ajax({url: "data/config.txt"}).then(data => {
-            Config.servicesEncrypted = data.trim().replace(/[\r\n]/g, "");
-            Logger.debug("Load encrypted services configuration from file (finished)");
-        });
+window.addEventListener('DOMContentLoaded', async () => {
+    // check for APIs
+    if (!window.crypto || !window.crypto.subtle || !window.TextEncoder || !window.TextDecoder) {
+        Logger.log("Browser lacks API support, get a new one");
+        return;
     }
-);
+
+    registerListeners();
+
+    // load config file contents into Config object
+    const response = await fetch('data/config.txt');
+    const responseText = await response.text();
+    Config.servicesEncrypted = responseText.trim().replace(/[\r\n]/g, "");
+    Logger.debug("Load encrypted services configuration from file (finished)");
+});
 
 /**
  * Register event listeners for input fields and buttons.
