@@ -117,8 +117,13 @@ async function decryptConfig() {
  * Derive raw service keys for all services configured with the given count of iterations. Patterns are applied later.
  */
 function deriveServiceKeys() {
-    const table = jQuery("table#services tbody");
-    table.empty();
+    const tbody = document.querySelector("table#services tbody");
+
+    // remove all table rows
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.lastChild);
+    }
+
     for (const service of Config.services) { // process all services configured
         let iterations = 1;
         if (service.iterations !== undefined && !isNaN(parseInt(service.iterations, 10))) {
@@ -130,7 +135,7 @@ function deriveServiceKeys() {
         deriveKey(Config.userSecret, service.name, 1000 + iterations).then(aesKey => {
             return window.crypto.subtle.exportKey("raw", aesKey); // export key for display
         }).then(arrayBuffer => {
-            computeAndRenderServiceKey(new Uint8Array(arrayBuffer), service, table);
+            computeAndRenderServiceKey(new Uint8Array(arrayBuffer), service, tbody);
         }).catch(reason => {
             Logger.log("Key derivation failed: " + reason, "Key derivation failed");
         });
@@ -140,11 +145,11 @@ function deriveServiceKeys() {
 /**
  * Compute passwords for services and render them.
  *
- * @param {Uint8Array} keyBytes - derived service key as raw bytes
- * @param {Service} service - service entry object
- * @param {jQuery} table - jQuery object to render the service entries into
+ * @param {Uint8Array} keyBytes derived service key as raw bytes
+ * @param {Service} service service entry object
+ * @param {Element} tbody tbody element to render the service entries into
  */
-function computeAndRenderServiceKey(keyBytes, service, table) {
+function computeAndRenderServiceKey(keyBytes, service, tbody) {
     if (service.pattern === undefined) service.pattern = Object.getOwnPropertyNames(Patterns.templates)[0];
     const templateClass = Patterns.templates[service.pattern];
     const template = templateClass[keyBytes[0] % templateClass.length];
@@ -153,7 +158,7 @@ function computeAndRenderServiceKey(keyBytes, service, table) {
         return characters[keyBytes[i + 1] % characters.length];
     }).join("");
 
-    const row = jQuery("<tr/>").appendTo(table);
+    const row = jQuery("<tr/>").appendTo(tbody);
     jQuery("<td/>").text(service.name).appendTo(row);
     jQuery("<td/>").text(serviceKey).appendTo(row).addClass("key").click(data => {
         selectElementText(data.target); // select key on click
