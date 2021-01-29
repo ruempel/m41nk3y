@@ -1,6 +1,7 @@
 "use strict";
 
 import Logger from "./logger.js";
+import Util from "./util.js";
 import Patterns from "./patterns.js";
 import Converter from "./convert.js";
 import Config from "./serviceconfig.js";
@@ -10,7 +11,7 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker
         .register("serviceworker.js")
         .then(() => {
-            console.log("service worker registered");
+            Logger.log("service worker registered");
         });
 }
 
@@ -32,39 +33,37 @@ window.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('data/config.txt');
     const responseText = await response.text();
     Config.servicesEncrypted = responseText.trim().replace(/[\r\n]/g, "");
-    Logger.debug("Load encrypted services configuration from file (finished)");
+    Logger.debug("Load encrypted services configuration from file (finished).");
 });
 
 /**
  * Register event listeners for input fields and buttons.
  */
 function registerListeners() {
-    // register master key input and decrypt button handlers
-    const decryptButton = jQuery("#decrypt-config");
-    jQuery("#masterkey")
-        .change(importMasterKey) // re-import master key on each input string change
-        .keypress(event => {
-            decryptButton.removeClass("btn-success").addClass("btn-danger"); // switch to red color
-            if (event.key === "Enter")
-                importMasterKey().then(decryptConfig); // try decryption, when master key entered
-        });
-    decryptButton.click(decryptConfig); // try decryption, when button clicked
+    // register listeners for master key input field
+    Util.addListener("#masterkey", "change", importMasterKey);
+    Util.addListener("#masterkey", "keypress", event => {
+        Util.replaceClasses("#decrypt-config", "btn-success", "btn-danger");
+        if (event.key === "Enter")
+            importMasterKey().then(decryptConfig); // try decryption, when master key entered
+    });
 
-    // register listeners for other buttons
-    jQuery("#derive-keys").click(deriveServiceKeys);
-    jQuery("#export-config").click(encryptConfig);
+    // register listeners for buttons
+    Util.addListener("#decrypt-config", "click", decryptConfig); // try decryption, when button clicked
+    Util.addListener("#derive-keys", "click", deriveServiceKeys);
+    Util.addListener("#export-config", "click", encryptConfig);
 
     // register click listener for new service input form elements
-    jQuery("#add-new-service-name").click(() => {
-        const newServiceName = jQuery("#new-service-name");
+    Util.addListener("#add-new-service-name", "click", () => {
+        const newServiceName = document.querySelector("#new-service-name");
         // validate service name
-        if (null === newServiceName.val().trim().match(/\w+[.]\w+/)) {
+        if (null === newServiceName.value.trim().match(/\w+[.]\w+/)) {
             Logger.log("Invalid service name to add.");
         } else {
-            Config.addService(newServiceName.val().trim());
+            Config.addService(newServiceName.value.trim());
             // force re-render
             deriveServiceKeys();
-            newServiceName.val("");
+            newServiceName.value = "";
         }
     });
 
@@ -76,42 +75,41 @@ function registerListeners() {
 
 /**
  * Imports the user secret from the password field to a CryptoKey object.
- * Stores the derived master key in Config.userSecret.
- *
- * @returns {PromiseLike<CryptoKey>} master key derived from user secret
+ * Stores the master key imported from user input to Config.userSecret.
+ * Stores the AES key for config file decryption to Config.configKeyAES.
  */
-function importMasterKey() {
+async function importMasterKey() {
     Logger.debug("Import master key from user input");
-    return window.crypto.subtle.importKey( // create CryptoKey from input master password
+    Config.userSecret = await window.crypto.subtle.importKey( // create CryptoKey from input master password
         "raw",
-        Converter.encodeFromText(jQuery("#masterkey").val().trim()),
+        Converter.encodeFromText(document.querySelector("#masterkey").value.trim()),
         "PBKDF2",
         false,
-        ["deriveKey"]).then(key => {
-        Config.userSecret = key;
-        return deriveKey(key, "config", 1000).then(aesKey => { // use pre-defined salt and iterations count
-            Config.configKeyAES = aesKey;
-        });
-    });
+        ["deriveKey"]);
+    const salt = "config";
+    const iterationsCount = 1000;
+    Config.configKeyAES = await deriveKey(Config.userSecret, salt, iterationsCount);
 }
 
 /**
- * Attempts to decrypt services configuration with the master key derived from the input user secret.
+ * Attempts to decrypt services configuration with Config.configKeyAES.
  */
-function decryptConfig() {
-    const iv = Converter.encodeFromHexString(Config.servicesEncrypted.substr(0, 32)); // extract init vector from first 32 characters
-    const payload = Config.servicesEncrypted.substr(32); // cut off init vector from payload
+async function decryptConfig() {
+    const initVectorLength = 32;
+    const initVector = Converter.encodeFromHexString(Config.servicesEncrypted.substr(0, initVectorLength)); // extract init vector
+    const payload = Config.servicesEncrypted.substr(initVectorLength); // cut off init vector from payload
     window.crypto.subtle.decrypt(
-        {name: "AES-CBC", iv: iv},
+        {name: "AES-CBC", iv: initVector},
         Config.configKeyAES,
         Converter.encodeFromHexString(payload)
     ).then(config => {
-        const decodedConfig = Converter.decodeToText(config);
-        Config.services = JSON.parse(decodedConfig);
-        jQuery("#decrypt-config").removeClass("btn-danger").addClass("btn-success");
-        Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
-    }).catch(reason => {
-        Logger.log("Wrong master key: " + reason, "Wrong master key");
+            const decodedConfig = Converter.decodeToText(config);
+            Config.services = JSON.parse(decodedConfig);
+            Util.replaceClasses("#decrypt-config", "btn-danger", "btn-success");
+            Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
+        }
+    ).catch(result => {
+        Logger.log("Wrong master key: " + result, "Wrong master key");
     });
 }
 
