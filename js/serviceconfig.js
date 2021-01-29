@@ -16,8 +16,8 @@
 /**
  * @typedef Config
  * @type {object}
- * @property {string} userSecret - the user's secret master key
- * @property {string} configKeyAES - symmetric encryption and decryption of services configuration
+ * @property {CryptoKey} userSecret - the user's secret master key
+ * @property {CryptoKey} configKeyAES - symmetric encryption and decryption of services configuration
  * @property {Service[]} services - JSON services configuration
  * @property {string} servicesEncrypted - JSON services configuration encrypted
  */
