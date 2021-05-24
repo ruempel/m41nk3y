@@ -198,11 +198,12 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
         let qr = qrcode(4, "M"); // type number and error correction level
         qr.addData(serviceKey);
         qr.make();
+        let qrCodeSvgTag = qr.createSvgTag({cellSize: 4});
 
-        jQuery("div#qrcode").remove(); // remove old modals to prevent memory leak
-        jQuery("<div/>").addClass("modal")
-            .attr({tabindex: -1, role: "dialog", id: "qrcode"})
-            .html(qr.createSvgTag({cellSize: 4})).modal("show");
+        // update content and show modal
+        let qrCodeContainer = document.querySelector("#qrcode");
+        qrCodeContainer.querySelector(".modal-content").innerHTML = qrCodeSvgTag;
+        new bootstrap.Modal(qrCodeContainer).show();
     });
 
     const deleteButton = jQuery("<button/>")
