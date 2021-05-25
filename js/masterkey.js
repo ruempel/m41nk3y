@@ -158,23 +158,38 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
         return characters[keyBytes[i + 1] % characters.length];
     }).join("");
 
-    const row = jQuery("<tr/>").appendTo(tbody);
-    jQuery("<td/>").text(service.name).appendTo(row);
-    jQuery("<td/>").text(serviceKey).appendTo(row).addClass("key").click(data => {
+    const row = document.createElement("tr");
+    tbody.appendChild(row);
+
+    const cellServiceName = document.createElement("td");
+    row.appendChild(cellServiceName);
+    cellServiceName.innerText = service.name;
+
+    const cellServiceKey = document.createElement("td");
+    row.appendChild(cellServiceKey);
+    cellServiceKey.innerText = serviceKey;
+    cellServiceKey.setAttribute("class", "key");
+    cellServiceKey.addEventListener("click", data => {
         selectElementText(data.target); // select key on click
     });
 
     // handle pattern selector
-    const select = jQuery("<select/>").addClass("form-control form-control-sm");
+    const cellPattern = document.createElement("td");
+    row.appendChild(cellPattern);
+
+    const select = document.createElement("select");
+    cellPattern.appendChild(select);
+    select.setAttribute("class", "form-control form-control-sm");
+
     for (const template of Object.getOwnPropertyNames(Patterns.templates)) {
-        const option = jQuery("<option/>").text(template).val(template).appendTo(select);
-        if (template === service.pattern) option.prop("selected", true);
+        select.appendChild(new Option(template, template,
+            template === service.pattern, template === service.pattern));
     }
-    select.change(() => {
-        service.pattern = select.val().trim();
+
+    select.addEventListener("change", () => {
+        service.pattern = select.value.trim();
         deriveServiceKeys();
     });
-    jQuery("<td/>").append(select).appendTo(row);
 
     // handle iterations selector
     const count = jQuery("<input/>").addClass("form-control form-control-sm").attr({
