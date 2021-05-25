@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Register event listeners for input fields and buttons.
+ * Registers event listeners for input fields and buttons.
  */
 function registerListeners() {
     // register listeners for master key input field
@@ -114,7 +114,7 @@ async function decryptConfig() {
 }
 
 /**
- * Derive raw service keys for all services configured with the given count of iterations. Patterns are applied later.
+ * Derives raw service keys for all services configured with the given count of iterations. Patterns are applied later.
  */
 function deriveServiceKeys() {
     const tbody = document.querySelector("table#services tbody");
@@ -143,7 +143,7 @@ function deriveServiceKeys() {
 }
 
 /**
- * Compute passwords for services and render them.
+ * Computes passwords for services and render them.
  *
  * @param {Uint8Array} keyBytes derived service key as raw bytes
  * @param {Service} service service entry object
@@ -208,9 +208,9 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
 }
 
 /**
- * Create a QR code from a string and display it as a modal.
+ * Creates a QR code from a string and display it as a modal.
  *
- * @param text string to convert and display as a QR code
+ * @param {string} text string to convert and display as a QR code
  */
 function showQrCode(text) {
     let qr = qrcode(4, "M"); // type number and error correction level
@@ -225,9 +225,9 @@ function showQrCode(text) {
 }
 
 /**
- * Select text to copy easily.
+ * Selects text to copy easily.
  *
- * @param {Node} element - DOM element containing text to be selected
+ * @param {Node} element DOM element containing text to be selected
  */
 function selectElementText(element) {
     const range = document.createRange();
@@ -240,9 +240,9 @@ function selectElementText(element) {
 /**
  * Derives configuration key or services keys from master key.
  *
- * @param {CryptoKey} masterKey - key to derive other key from
- * @param {string} salt - salt for key derivation
- * @param {number} iterations - hashing iterations
+ * @param {CryptoKey} masterKey key to derive other key from
+ * @param {string} salt salt for key derivation
+ * @param {number} iterations hashing iterations
  * @returns {PromiseLike<CryptoKey>} promise containing the derived key
  */
 function deriveKey(masterKey, salt, iterations) {
