@@ -13,6 +13,10 @@ body {
     color: #ccc;
 }
 
+i.label {
+    margin-right: 0.5rem;
+}
+
 .key {
     font-family: Inconsolata, monospace;
 }
