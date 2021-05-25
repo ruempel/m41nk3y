@@ -162,7 +162,7 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
     tbody.appendChild(row);
 
     const cellServiceName = document.createElement("td");
-    row.appendChild(cellServiceName);
+    row.appendChild(cellServiceName); // TODO make service name clickable
     cellServiceName.innerText = service.name;
 
     const cellServiceKey = document.createElement("td");
