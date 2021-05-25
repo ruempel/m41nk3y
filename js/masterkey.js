@@ -194,16 +194,7 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
         .html("<i class='fas fa-qrcode'></i>");
 
     qrcodeButton.click(() => {
-        // create QR code
-        let qr = qrcode(4, "M"); // type number and error correction level
-        qr.addData(serviceKey);
-        qr.make();
-        let qrCodeSvgTag = qr.createSvgTag({cellSize: 4});
-
-        // update content and show modal
-        let qrCodeContainer = document.querySelector("#qrcode");
-        qrCodeContainer.querySelector(".modal-content").innerHTML = qrCodeSvgTag;
-        new bootstrap.Modal(qrCodeContainer).show();
+        showQrCode(serviceKey);
     });
 
     const deleteButton = jQuery("<button/>")
@@ -214,6 +205,23 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
         // TODO make removal action more smooth in terms of refreshing the table contents
     });
     jQuery("<td/>").append(qrcodeButton).append(deleteButton).appendTo(row);
+}
+
+/**
+ * Create a QR code from a string and display it as a modal.
+ *
+ * @param text string to convert and display as a QR code
+ */
+function showQrCode(text) {
+    let qr = qrcode(4, "M"); // type number and error correction level
+    qr.addData(text);
+    qr.make();
+    let qrCodeSvgTag = qr.createSvgTag({cellSize: 4});
+
+    // update content and show modal
+    let qrCodeContainer = document.querySelector("#qrcode");
+    qrCodeContainer.querySelector(".modal-content").innerHTML = qrCodeSvgTag;
+    new bootstrap.Modal(qrCodeContainer).show();
 }
 
 /**
