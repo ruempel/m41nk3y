@@ -19,12 +19,13 @@ export default class Download {
         }
 
         const downloadURI = "data:text/plain;charset=utf-8," + chunkedPayload;
-        const blindAnchor = jQuery("<a/>").attr({
-            href: downloadURI,
-            download: "download",
-            hidden: "hidden"
-        }).appendTo(jQuery("body"));
-        blindAnchor[0].click();
+
+        const blindAnchor = document.createElement("a");
+        document.querySelector("body").appendChild(blindAnchor);
+        blindAnchor.setAttribute("href", downloadURI);
+        blindAnchor.setAttribute("download", "download");
+        blindAnchor.setAttribute("hidden", "hidden");
+        blindAnchor.click();
         blindAnchor.remove();
     }
 }
