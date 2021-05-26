@@ -5,7 +5,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox
 if (workbox) {
     // register third-party resources
     workbox.routing.registerRoute(
-        /^https:.+(?:jquery|popper|bootstrap|qrcode|fontawesome|gstatic).+(?:js|css|woff2)$/,
+        /^https:.+(?:popper|bootstrap|qrcode|fontawesome|gstatic).+(?:js|css|woff2)$/,
         new workbox.strategies.NetworkFirst(),
     );
 
