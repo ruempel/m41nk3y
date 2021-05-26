@@ -68,7 +68,7 @@ function registerListeners() {
     });
 
     // disable default reload for form encapsulating password
-    jQuery("#passwordform").submit(() => {
+    document.querySelector("#passwordform").addEventListener("submit", () => {
         return false;
     });
 }
@@ -209,23 +209,34 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
     });
 
     // management buttons
-    const qrcodeButton = jQuery("<button/>")
-        .addClass("btn btn-light")
-        .attr({type: "button", "data-toggle": "tooltip", title: "Show QR Code"})
-        .html("<i class='fas fa-qrcode'></i>");
+    const cellActions = document.createElement("td");
+    row.appendChild(cellActions);
 
-    qrcodeButton.click(() => {
+    // button for showing QR code
+    const buttonQrCode = document.createElement("button");
+    cellActions.appendChild(buttonQrCode);
+    buttonQrCode.setAttribute("class", "btn btn-light");
+    buttonQrCode.setAttribute("type", "button");
+    buttonQrCode.setAttribute("data-toggle", "tooltip");
+    buttonQrCode.setAttribute("title", "Show QR code for " + service.name);
+    buttonQrCode.innerHTML = "<i class='fas fa-qrcode'></i>";
+    buttonQrCode.addEventListener("click", () => {
         showQrCode(serviceKey);
     });
 
-    const deleteButton = jQuery("<button/>")
-        .addClass("btn btn-danger").attr("type", "button").html("<i class='fas fa-trash'></i>");
-    deleteButton.click(() => {
+    // button for deleting service from list
+    const buttonDelete = document.createElement("button");
+    cellActions.appendChild(buttonDelete);
+    buttonDelete.setAttribute("class", "btn btn-danger");
+    buttonDelete.setAttribute("type", "button");
+    buttonDelete.setAttribute("data-toggle", "tooltip");
+    buttonDelete.setAttribute("title", "Remove " + service.name + " from services list");
+    buttonDelete.innerHTML = "<i class='fas fa-trash'></i>";
+    buttonDelete.addEventListener("click", () => {
         Config.removeService(service.name);
         deriveServiceKeys();
         // TODO make removal action more smooth in terms of refreshing the table contents
     });
-    jQuery("<td/>").append(qrcodeButton).append(deleteButton).appendTo(row);
 }
 
 /**
