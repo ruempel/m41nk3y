@@ -192,15 +192,21 @@ function computeAndRenderServiceKey(keyBytes, service, tbody) {
     });
 
     // handle iterations selector
-    const count = jQuery("<input/>").addClass("form-control form-control-sm").attr({
-        type: "number",
-        min: "1"
-    }).val(service.iterations);
-    count.change(() => {
-        service.iterations = parseInt(count.val());
+    const cellIterations = document.createElement("td");
+    row.appendChild(cellIterations);
+
+    // TODO add extra decrement and increment buttons to the left and right side of a readonly number
+    const count = document.createElement("input");
+    cellIterations.appendChild(count);
+    count.setAttribute("class", "form-control form-control-sm");
+    count.setAttribute("type", "number");
+    count.setAttribute("min", "1");
+    count.value = service.iterations.toString();
+
+    count.addEventListener("change", () => {
+        service.iterations = parseInt(count.value);
         deriveServiceKeys();
     });
-    jQuery("<td/>").append(count).appendTo(row);
 
     // management buttons
     const qrcodeButton = jQuery("<button/>")
