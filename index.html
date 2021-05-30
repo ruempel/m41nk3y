@@ -25,8 +25,7 @@
         <div class="input-group mb-3">
             <input type="password" id="masterkey" class="form-control" placeholder="master secret"
                    aria-label="master secret" autocomplete="off" autofocus/>
-            <button class="btn btn-success" type="button" id="decrypt-config">Go</button>
-            <button class="btn btn-primary" type="button" id="derive-keys">Derive</button>
+            <button class="btn btn-success" type="button" id="decrypt-config"><i class="fas fa-key label"></i> SHOW</button>
         </div>
     </form>
 
@@ -48,15 +47,18 @@
     <div class="input-group mb-3">
         <input type="text" id="new-service-name" class="form-control" placeholder="service name"
                aria-label="service name" aria-describedby="add-new-service-name"/>
-        <button class="btn btn-success" type="button" id="add-new-service-name"><i class="fas fa-plus label"></i> Add new
-            service
+        <button class="btn btn-primary" type="button" id="add-new-service-name"><i class="fas fa-plus label"></i>
+            ADD NEW SERVICE
         </button>
     </div>
 </section>
 
 <section style="visibility: inherit">
-    <button type="button" id="export-config" class="btn btn-sm btn-danger"><i class="fas fa-envelope-open-text label"></i>
-        Export encrypted config
+    <button type="button" class="btn btn-primary" id="export-config"><i class="fas fa-envelope-open-text label"></i>
+        EXPORT ENCRYPTED CONFIG
+    </button>
+    <button type="button" class="btn btn-primary" id="derive-keys"><i class="fas fa-sync label"></i>
+        RE-DERIVE
     </button>
 </section>
 
