@@ -40,16 +40,28 @@ window.addEventListener('DOMContentLoaded', async () => {
  * Registers event listeners for input fields and buttons.
  */
 function registerListeners() {
-    // register listeners for master key input field
-    Util.addListener("#masterkey", "change", importMasterKey);
-    Util.addListener("#masterkey", "keypress", event => {
-        Util.replaceClasses("#decrypt-config", "btn-success", "btn-danger");
-        if (event.key === "Enter")
-            importMasterKey().then(decryptConfig); // try decryption, when master key entered
+    // disable default reload for form encapsulating password
+    Util.addListener("#passwordform", "keypress", event => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
     });
 
+    // register listeners for master key input field
+    async function checkChangedInput(event) {
+        await importMasterKey();
+        if (event.key === "Enter") {
+            await decryptConfig(); // try decryption, when master key entered
+        }
+    }
+    Util.addListener("#masterkey", "paste", checkChangedInput);
+    Util.addListener("#masterkey", "keypress", checkChangedInput);
+
+
     // register listeners for buttons
-    Util.addListener("#decrypt-config", "click", decryptConfig); // try decryption, when button clicked
+    Util.addListener("#decrypt-config", "click", () => {
+        importMasterKey().then(decryptConfig);
+    }); // try decryption, when button clicked
     Util.addListener("#derive-keys", "click", deriveServiceKeys);
     Util.addListener("#export-config", "click", encryptConfig);
 
@@ -65,11 +77,6 @@ function registerListeners() {
             deriveServiceKeys();
             newServiceName.value = "";
         }
-    });
-
-    // disable default reload for form encapsulating password
-    Util.addListener("#passwordform", "keypress", e => {
-        e.preventDefault();
     });
 }
 
@@ -98,19 +105,22 @@ async function decryptConfig() {
     const initVectorLength = 32;
     const initVector = Converter.encodeFromHexString(Config.servicesEncrypted.substr(0, initVectorLength)); // extract init vector
     const payload = Config.servicesEncrypted.substr(initVectorLength); // cut off init vector from payload
-    window.crypto.subtle.decrypt(
-        {name: "AES-CBC", iv: initVector},
-        Config.configKeyAES,
-        Converter.encodeFromHexString(payload)
-    ).then(config => {
-            const decodedConfig = Converter.decodeToText(config);
-            Config.services = JSON.parse(decodedConfig);
-            Util.replaceClasses("#decrypt-config", "btn-danger", "btn-success");
-            Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
-        }
-    ).catch(result => {
+    try {
+        const configAsArrayBuffer = await window.crypto.subtle.decrypt(
+            {name: "AES-CBC", iv: initVector},
+            Config.configKeyAES,
+            Converter.encodeFromHexString(payload)
+        );
+        const decodedConfig = Converter.decodeToText(configAsArrayBuffer);
+        Config.services = JSON.parse(decodedConfig);
+        Util.replaceClasses("#decrypt-config", "btn-danger", "btn-success");
+        Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
+
+        deriveServiceKeys();
+    } catch (result) {
         Logger.log("Wrong master key: " + result, "Wrong master key");
-    });
+        Util.replaceClasses("#decrypt-config", "btn-success", "btn-danger");
+    }
 }
 
 /**
