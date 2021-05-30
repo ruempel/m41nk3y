@@ -68,8 +68,8 @@ function registerListeners() {
     });
 
     // disable default reload for form encapsulating password
-    document.querySelector("#passwordform").addEventListener("submit", () => {
-        return false;
+    Util.addListener("#passwordform", "keypress", e => {
+        e.preventDefault();
     });
 }
 
