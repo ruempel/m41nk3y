@@ -1,38 +1,68 @@
-@import url("https://fonts.googleapis.com/css?family=Titillium+Web:400,600");
-@import url("https://fonts.googleapis.com/css?family=Inconsolata");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
 html {
     font-size: 20px;
 }
 
 body {
-    font-family: "Titillium Web", sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 1rem;
     margin: 0.25rem;
-    background-color: #222;
-    color: #ccc;
+    background-color: #111;
+    color: #ddd;
 }
 
 i.label {
     margin-right: 0.5rem;
 }
 
-.key {
-    font-family: Inconsolata, monospace;
+.service-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem 0;
 }
 
-td > select {
-    width: 6rem;
+.service-entry {
+    margin: 0.125rem 0;
+    background-color: #383838;
 }
 
-input[type=number] {
-    width: 3rem;
+.hidden {
+    display: none;
 }
 
-th {
+.service-header, .service-password, .service-settings {
+    padding: 5px;
+}
+
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.service-name {
+    overflow-wrap: anywhere;
+}
+
+.btn {
+    font-weight: 500;
+}
+
+.service-details select {
+    width: 8rem;
+}
+
+.service-settings {
+    display: flex;
+    justify-content: space-between;
+    background-color: #484848;
+}
+
+code {
     color: #8bc34a;
-}
-
-#services td button.btn {
-    margin-right: 0.5rem;
+    padding: 5px;
+    border: white solid 1px;
 }

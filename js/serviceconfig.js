@@ -31,8 +31,10 @@ export default class Config {
             }
         }
         console.info(`Add service ${candidate}`);
-        this.services.push({name: candidate});
+        const newService = {name: candidate, iterations: 1}
+        this.services.push(newService);
         this.sortServices();
+        return newService;
     }
 
     static removeService(name) {

@@ -56,12 +56,14 @@ ATTENTION: All service keys are changed!
 
 ## Feature Wishlist
 
+* improve mobile layout
+* filter table
+* improve display of QR code
+* display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
-* only one button on top
 * better promise chaining and event handling
 * smarter configuration file saving, upload, share, cloud store
 * hide keys per default, show only on request, auto-hide after some seconds, extra button for hidden copy action
-* filter table (jQuery data tables)
 
 # Example Configuration
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>m4st3rk3y</title>
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="manifest" href="manifest.json"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
@@ -23,29 +23,52 @@
 <section>
     <form id="passwordform">
         <div class="input-group mb-3">
-            <input type="password" id="masterkey" class="form-control" placeholder="master secret"
+            <input type="password" id="masterkey" class="form-control bg-dark text-light" placeholder="master secret"
                    aria-label="master secret" autocomplete="off" autofocus/>
-            <button class="btn btn-success" type="button" id="decrypt-config"><i class="fas fa-key label"></i> SHOW</button>
+            <button class="btn btn-success" type="button" id="decrypt-config"><i class="fas fa-key label"></i> SHOW
+            </button>
         </div>
     </form>
-
-    <table id="services" class="table table-sm table-dark">
-        <thead>
-        <tr>
-            <th>Service Name</th>
-            <th>Key (Password)</th>
-            <th>Pattern</th>
-            <th>Iterations</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
 </section>
 
 <section>
+    <div class="input-group">
+        <div id="filter-label" class="input-group-text bg-dark text-light">Filter</div>
+        <input type="text" id="filter-text" class="form-control bg-dark text-light" placeholder="filter services by name"
+               aria-label="service filter" aria-describedby="filter-label"/>
+    </div>
+</section>
+
+<section class="service-list">
+</section>
+
+<template id="entry-template">
+    <div class="service-entry">
+        <div class="service-header">
+            <div class="service-name"></div>
+            <button class="btn btn-outline-light action-delete"><i class='fas fa-trash'></i></button>
+        </div>
+        <div class="service-details">
+            <div class="service-password">
+                <code></code>
+                <button class="btn btn-outline-light action-copy"><i class='fas fa-copy'></i></button>
+                <button class="btn btn-outline-light action-show-qrcode"><i class='fas fa-qrcode'></i></button>
+            </div>
+            <div class="service-settings">
+                <div><select class="form-control form-control-sm bg-dark text-light"></select></div>
+                <div>Iterations:
+                    <button class="btn btn-primary btn-sm action-iterations-decrement">–</button>
+                    <span class="iterations-count"></span>
+                    <button class="btn btn-primary btn-sm action-iterations-increment">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<section>
     <div class="input-group mb-3">
-        <input type="text" id="new-service-name" class="form-control" placeholder="service name"
+        <input type="text" id="new-service-name" class="form-control bg-dark text-light" placeholder="service name"
                aria-label="service name" aria-describedby="add-new-service-name"/>
         <button class="btn btn-primary" type="button" id="add-new-service-name"><i class="fas fa-plus label"></i>
             ADD NEW SERVICE
@@ -53,11 +76,12 @@
     </div>
 </section>
 
-<section style="visibility: inherit">
-    <button type="button" class="btn btn-primary" id="export-config"><i class="fas fa-envelope-open-text label"></i>
+<section>
+    <button type="button" class="btn btn-secondary btn-sm" id="export-config"><i
+        class="fas fa-envelope-open-text label"></i>
         EXPORT ENCRYPTED CONFIG
     </button>
-    <button type="button" class="btn btn-primary" id="derive-keys"><i class="fas fa-sync label"></i>
+    <button type="button" class="btn btn-secondary btn-sm" id="derive-keys"><i class="fas fa-sync label"></i>
         RE-DERIVE
     </button>
 </section>

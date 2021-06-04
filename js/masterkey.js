@@ -54,9 +54,9 @@ function registerListeners() {
             await decryptConfig(); // try decryption, when master key entered
         }
     }
+
     Util.addListener("#masterkey", "paste", checkChangedInput);
     Util.addListener("#masterkey", "keypress", checkChangedInput);
-
 
     // register listeners for buttons
     Util.addListener("#decrypt-config", "click", () => {
@@ -65,17 +65,30 @@ function registerListeners() {
     Util.addListener("#derive-keys", "click", deriveServiceKeys);
     Util.addListener("#export-config", "click", encryptConfig);
 
+    // register listener for filter change
+    Util.addListener("#filter-text", "input", event => {
+        const serviceElements = document.querySelector(".service-list").children;
+        for (const service of serviceElements) {
+            let classes = service.getAttribute("class");
+            if (service.querySelector(".service-name").innerText.includes(event.target.value)) {
+                classes = classes.replaceAll("hidden", "").trim();
+            } else {
+                classes += classes.includes("hidden") ? "" : " " + "hidden";
+            }
+            service.setAttribute("class", classes);
+        }
+    });
+
     // register click listener for new service input form elements
-    Util.addListener("#add-new-service-name", "click", () => {
+    Util.addListener("#add-new-service-name", "click", async () => {
         const newServiceName = document.querySelector("#new-service-name");
+        newServiceName.value = newServiceName.value.trim();
         // validate service name
-        if (null === newServiceName.value.trim().match(/\w+[.]\w+/)) {
+        if (null === newServiceName.value.match(/\w+[.]\w+/)) {
             Logger.log("Invalid service name to add.");
         } else {
-            Config.addService(newServiceName.value.trim());
-            // force re-render
-            deriveServiceKeys();
-            newServiceName.value = "";
+            await renderServiceToList(Config.addService(newServiceName.value));
+            newServiceName.value = ""; // reset input field
         }
     });
 }
@@ -116,7 +129,7 @@ async function decryptConfig() {
         Util.replaceClasses("#decrypt-config", "btn-danger", "btn-success");
         Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
 
-        deriveServiceKeys();
+        await deriveServiceKeys();
     } catch (result) {
         Logger.log("Wrong master key: " + result, "Wrong master key");
         Util.replaceClasses("#decrypt-config", "btn-success", "btn-danger");
@@ -126,13 +139,8 @@ async function decryptConfig() {
 /**
  * Derives raw service keys for all services configured with the given count of iterations. Patterns are applied later.
  */
-function deriveServiceKeys() {
-    const tbody = document.querySelector("table#services tbody");
-
-    // remove all table rows
-    while (tbody.firstChild) {
-        tbody.removeChild(tbody.lastChild);
-    }
+async function deriveServiceKeys() {
+    document.querySelector(".service-list").textContent = ""; // remove all services from list
 
     for (const service of Config.services) { // process all services configured
         let iterations = 1;
@@ -141,112 +149,94 @@ function deriveServiceKeys() {
         } else {
             service.iterations = 1; // set iterations to 1 when missing
         }
-
-        deriveKey(Config.userSecret, service.name, 1000 + iterations).then(aesKey => {
-            return window.crypto.subtle.exportKey("raw", aesKey); // export key for display
-        }).then(arrayBuffer => {
-            computeAndRenderServiceKey(new Uint8Array(arrayBuffer), service, tbody);
-        }).catch(reason => {
-            Logger.log("Key derivation failed: " + reason, "Key derivation failed");
-        });
+        await renderServiceToList(service);
     }
 }
 
 /**
- * Computes passwords for services and render them.
+ * Returns the services key.
  *
- * @param {Uint8Array} keyBytes derived service key as raw bytes
- * @param {Service} service service entry object
- * @param {Element} tbody tbody element to render the service entries into
+ * @param service service to get the key for
+ * @returns {Promise<string>} derived key
  */
-function computeAndRenderServiceKey(keyBytes, service, tbody) {
+async function getKey(service) {
+    const aesKey = await deriveKey(Config.userSecret, service.name, 1000 + service.iterations);
+    const arrayBuffer = await window.crypto.subtle.exportKey("raw", aesKey); // export key for display
+    const keyBytes = new Uint8Array(arrayBuffer);
     if (service.pattern === undefined) service.pattern = Object.getOwnPropertyNames(Patterns.templates)[0];
     const templateClass = Patterns.templates[service.pattern];
     const template = templateClass[keyBytes[0] % templateClass.length];
-    const serviceKey = template.split("").map(function (c, i) {
+    return template.split("").map(function (c, i) {
         const characters = Patterns.keycharacters[c];
         return characters[keyBytes[i + 1] % characters.length];
     }).join("");
+}
 
-    const row = document.createElement("tr");
-    tbody.appendChild(row);
+/**
+ * Renders service entry including the derived key to the service list.
+ *
+ * @param {Service} service service entry object
+ */
+async function renderServiceToList(service) {
+    const serviceKey = await getKey(service); // derive key for this service
 
-    const cellServiceName = document.createElement("td");
-    row.appendChild(cellServiceName); // TODO make service name clickable
-    cellServiceName.innerText = service.name;
+    // import document fragment from HTML template and fill with service data
+    const serviceList = document.querySelector(".service-list");
+    const fragment = document.importNode(document.querySelector("#entry-template").content, true);
+    const serviceElement = fragment.querySelector(".service-entry");
 
-    const cellServiceKey = document.createElement("td");
-    row.appendChild(cellServiceKey);
-    cellServiceKey.innerText = serviceKey;
-    cellServiceKey.setAttribute("class", "key");
-    cellServiceKey.addEventListener("click", data => {
+    // fill service name and add delete button listener
+    fragment.querySelector(".service-name").innerHTML = service.name;
+    fragment.querySelector(".action-delete").addEventListener("click", () => {
+        Config.removeService(service.name);
+        serviceList.removeChild(serviceElement);
+    });
+
+    // fill service password and listeners for copy and qr code buttons
+    const passwordElement = fragment.querySelector(".service-password code");
+    passwordElement.innerHTML = serviceKey;
+    passwordElement.addEventListener("click", data => {
         selectElementText(data.target); // select key on click
     });
-
-    // handle pattern selector
-    const cellPattern = document.createElement("td");
-    row.appendChild(cellPattern);
-
-    const select = document.createElement("select");
-    cellPattern.appendChild(select);
-    select.setAttribute("class", "form-control form-control-sm");
-
-    for (const template of Object.getOwnPropertyNames(Patterns.templates)) {
-        select.appendChild(new Option(template, template,
-            template === service.pattern, template === service.pattern));
-    }
-
-    select.addEventListener("change", () => {
-        service.pattern = select.value.trim();
-        deriveServiceKeys();
+    fragment.querySelector(".action-copy").addEventListener("click", () => {
+        // TODO add copy button listener
     });
-
-    // handle iterations selector
-    const cellIterations = document.createElement("td");
-    row.appendChild(cellIterations);
-
-    // TODO add extra decrement and increment buttons to the left and right side of a readonly number
-    const count = document.createElement("input");
-    cellIterations.appendChild(count);
-    count.setAttribute("class", "form-control form-control-sm");
-    count.setAttribute("type", "number");
-    count.setAttribute("min", "1");
-    count.value = service.iterations.toString();
-
-    count.addEventListener("change", () => {
-        service.iterations = parseInt(count.value);
-        deriveServiceKeys();
-    });
-
-    // management buttons
-    const cellActions = document.createElement("td");
-    row.appendChild(cellActions);
-
-    // button for showing QR code
-    const buttonQrCode = document.createElement("button");
-    cellActions.appendChild(buttonQrCode);
-    buttonQrCode.setAttribute("class", "btn btn-light");
-    buttonQrCode.setAttribute("type", "button");
-    buttonQrCode.setAttribute("data-toggle", "tooltip");
-    buttonQrCode.setAttribute("title", "Show QR code for " + service.name);
-    buttonQrCode.innerHTML = "<i class='fas fa-qrcode'></i>";
-    buttonQrCode.addEventListener("click", () => {
+    fragment.querySelector(".action-show-qrcode").addEventListener("click", () => {
         showQrCode(serviceKey);
     });
 
-    // button for deleting service from list
-    const buttonDelete = document.createElement("button");
-    cellActions.appendChild(buttonDelete);
-    buttonDelete.setAttribute("class", "btn btn-danger");
-    buttonDelete.setAttribute("type", "button");
-    buttonDelete.setAttribute("data-toggle", "tooltip");
-    buttonDelete.setAttribute("title", "Remove " + service.name + " from services list");
-    buttonDelete.innerHTML = "<i class='fas fa-trash'></i>";
-    buttonDelete.addEventListener("click", () => {
-        Config.removeService(service.name);
-        deriveServiceKeys();
-        // TODO make removal action more smooth in terms of refreshing the table contents
+    // fill pattern selector
+    const selectElement = fragment.querySelector("select");
+    for (const template of Object.getOwnPropertyNames(Patterns.templates)) {
+        selectElement.add(new Option(template, template, // TODO display human-readable pattern label
+            template === service.pattern, template === service.pattern));
+    }
+    selectElement.addEventListener("change", async () => {
+        service.pattern = selectElement.value.trim();
+        passwordElement.innerHTML = await getKey(service);
     });
+
+    // fill iterations config and
+    const iterationsCountElement = fragment.querySelector(".iterations-count");
+    iterationsCountElement.innerHTML = service.iterations.toString();
+    iterationsCountElement.addEventListener("DOMSubtreeModified", async () => {
+        const value = iterationsCountElement.innerHTML;
+        if (value) {
+            service.iterations = parseInt(iterationsCountElement.innerHTML);
+            passwordElement.innerHTML = await getKey(service);
+        }
+    });
+    fragment.querySelector(".action-iterations-decrement").addEventListener("click", () => {
+        const iterationsCount = parseInt(iterationsCountElement.innerHTML);
+        if (iterationsCount > 1) { // prevent settings counts below 1
+            iterationsCountElement.innerHTML = (iterationsCount - 1).toString();
+        }
+    })
+    // TODO disable decrement button when iterations = 1, enable, if higher (add attribute "disabled")
+    fragment.querySelector(".action-iterations-increment").addEventListener("click", () => {
+        iterationsCountElement.innerHTML = (parseInt(iterationsCountElement.innerHTML) + 1).toString();
+    });
+    serviceList.appendChild(fragment);
 }
 
 /**
