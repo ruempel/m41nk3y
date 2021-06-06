@@ -128,8 +128,8 @@ async function decryptConfig() {
         Config.services = JSON.parse(decodedConfig);
         Util.replaceClasses("#decrypt-config", "btn-danger", "btn-success");
         Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
-
         await deriveServiceKeys();
+        document.querySelector("#filter-text").focus(); // move cursor to filter input without extra click
     } catch (result) {
         Logger.log("Wrong master key: " + result, "Wrong master key");
         Util.replaceClasses("#decrypt-config", "btn-success", "btn-danger");
