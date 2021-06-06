@@ -186,7 +186,7 @@ async function renderServiceToList(service) {
     const serviceElement = fragment.querySelector(".service-entry");
 
     // fill service name and add delete button listener
-    fragment.querySelector(".service-name").innerHTML = service.name;
+    fragment.querySelector(".service-name").innerText = service.name;
     fragment.querySelector(".action-delete").addEventListener("click", () => {
         Config.removeService(service.name);
         serviceList.removeChild(serviceElement);
@@ -194,12 +194,12 @@ async function renderServiceToList(service) {
 
     // fill service password and listeners for copy and qr code buttons
     const passwordElement = fragment.querySelector(".service-password code");
-    passwordElement.innerHTML = serviceKey;
+    passwordElement.innerText = serviceKey;
     passwordElement.addEventListener("click", data => {
         selectElementText(data.target); // select key on click
     });
     fragment.querySelector(".action-copy").addEventListener("click", () => {
-        // TODO add copy button listener
+        navigator.clipboard.writeText(passwordElement.innerText);
     });
     fragment.querySelector(".action-show-qrcode").addEventListener("click", () => {
         showQrCode(serviceKey);
