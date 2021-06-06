@@ -213,28 +213,36 @@ async function renderServiceToList(service) {
     }
     selectElement.addEventListener("change", async () => {
         service.pattern = selectElement.value.trim();
-        passwordElement.innerHTML = await getKey(service);
+        passwordElement.innerText = await getKey(service);
     });
 
     // fill iterations config and
     const iterationsCountElement = fragment.querySelector(".iterations-count");
-    iterationsCountElement.innerHTML = service.iterations.toString();
+    iterationsCountElement.innerText = service.iterations.toString();
     iterationsCountElement.addEventListener("DOMSubtreeModified", async () => {
-        const value = iterationsCountElement.innerHTML;
+        const value = iterationsCountElement.innerText;
         if (value) {
-            service.iterations = parseInt(iterationsCountElement.innerHTML);
-            passwordElement.innerHTML = await getKey(service);
+            service.iterations = parseInt(iterationsCountElement.innerText);
+            passwordElement.innerText = await getKey(service);
         }
     });
-    fragment.querySelector(".action-iterations-decrement").addEventListener("click", () => {
-        const iterationsCount = parseInt(iterationsCountElement.innerHTML);
-        if (iterationsCount > 1) { // prevent settings counts below 1
-            iterationsCountElement.innerHTML = (iterationsCount - 1).toString();
+    const iterationsCountMinimum = 1;
+    const buttonDecrement = fragment.querySelector(".action-iterations-decrement");
+    buttonDecrement.addEventListener("click", () => {
+        const iterationsCount = parseInt(iterationsCountElement.innerText);
+        if (iterationsCount > iterationsCountMinimum) { // prevent settings counts below 1
+            iterationsCountElement.innerText = (iterationsCount - 1).toString();
+        }
+        if (iterationsCount - 1 === iterationsCountMinimum) {
+            Util.replaceClassesForElement(buttonDecrement, "", "disabled");
         }
     })
-    // TODO disable decrement button when iterations = 1, enable, if higher (add attribute "disabled")
+    if (parseInt(iterationsCountElement.innerHTML) <= iterationsCountMinimum) {
+        Util.replaceClassesForElement(buttonDecrement, "", "disabled");
+    }
     fragment.querySelector(".action-iterations-increment").addEventListener("click", () => {
-        iterationsCountElement.innerHTML = (parseInt(iterationsCountElement.innerHTML) + 1).toString();
+        iterationsCountElement.innerText = (parseInt(iterationsCountElement.innerText) + 1).toString();
+        Util.replaceClassesForElement(buttonDecrement, "disabled", "");
     });
     serviceList.appendChild(fragment);
 }

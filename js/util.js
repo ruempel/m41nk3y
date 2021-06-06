@@ -39,4 +39,12 @@ export default class Util {
         classes += classes.includes(toAdd) ? "" : " " + toAdd;
         element.setAttribute(classAttributeName, classes);
     }
+
+    static replaceClassesForElement(element, toRemove, toAdd) {
+        const classAttributeName = "class";
+        let classes = element.getAttribute(classAttributeName);
+        classes = classes.replaceAll(toRemove, "").trim();
+        classes += classes.includes(toAdd) ? "" : " " + toAdd;
+        element.setAttribute(classAttributeName, classes);
+    }
 }
