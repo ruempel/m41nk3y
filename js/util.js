@@ -33,11 +33,7 @@ export default class Util {
      */
     static replaceClasses(selector, toRemove, toAdd) {
         const element = document.querySelector(selector);
-        const classAttributeName = "class";
-        let classes = element.getAttribute(classAttributeName);
-        classes = classes.replaceAll(toRemove, "").trim();
-        classes += classes.includes(toAdd) ? "" : " " + toAdd;
-        element.setAttribute(classAttributeName, classes);
+        this.replaceClassesForElement(element, toRemove, toAdd);
     }
 
     static replaceClassesForElement(element, toRemove, toAdd) {
