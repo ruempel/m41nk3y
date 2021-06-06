@@ -22,7 +22,7 @@
 <body>
 <section>
     <form id="passwordform">
-        <div class="input-group mb-3">
+        <div class="input-group">
             <input type="password" id="masterkey" class="form-control bg-dark text-light" placeholder="master secret"
                    aria-label="master secret" autocomplete="off" autofocus/>
             <button class="btn btn-success" type="button" id="decrypt-config"><i class="fas fa-key label"></i> SHOW
@@ -32,7 +32,7 @@
 </section>
 
 <section>
-    <div class="input-group">
+    <div class="input-group my-3">
         <div id="filter-label" class="input-group-text bg-dark text-light">Filter</div>
         <input type="text" id="filter-text" class="form-control bg-dark text-light" placeholder="filter services by name"
                aria-label="service filter" aria-describedby="filter-label"/>
@@ -40,6 +40,7 @@
 </section>
 
 <section class="service-list">
+    Please enter the master secret to show services.
 </section>
 
 <template id="entry-template">
@@ -67,7 +68,7 @@
 </template>
 
 <section>
-    <div class="input-group mb-3">
+    <div class="input-group my-3">
         <input type="text" id="new-service-name" class="form-control bg-dark text-light" placeholder="service name"
                aria-label="service name" aria-describedby="add-new-service-name"/>
         <button class="btn btn-primary" type="button" id="add-new-service-name"><i class="fas fa-plus label"></i>

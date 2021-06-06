@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
+/** general and page */
 html {
     font-size: 20px;
 }
@@ -16,10 +17,14 @@ i.label {
     margin-right: 0.5rem;
 }
 
+.btn {
+    font-weight: 500;
+}
+
+/** service list and service entry layout */
 .service-list {
     display: flex;
     flex-direction: column;
-    padding: 0.25rem 0;
 }
 
 .service-entry {
@@ -31,6 +36,7 @@ i.label {
     display: none;
 }
 
+/** service entry content */
 .service-header, .service-password, .service-settings {
     padding: 5px;
 }
@@ -45,10 +51,6 @@ i.label {
 
 .service-name {
     overflow-wrap: anywhere;
-}
-
-.btn {
-    font-weight: 500;
 }
 
 .service-details select {
