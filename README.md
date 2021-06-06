@@ -31,19 +31,20 @@ names with an iteration count and a password pattern each.
 * With the m4st3rk3y application and the configuration file being public, the technology is vulnerable to offline brute
   force and dictionary attacks on your master secret. Of course, your option is to keep the configuration secret.
 * With your master secret compromised, all service passwords can be derived, assuming the attacker has access to your
-  configuration file or guesses your service names and the correct iteration count.
+  configuration file or guesses your service names, the pattern and the correct iteration count.
 * When changing your master secret, all service passwords change as well.
 
 # Features
 
 ## UI Features
 
-* derive service keys (or key for a single service)
+* derive service keys
 * change config for registered services (pattern and iterations)
 * export encrypted config to file
 * import encrypted config from file
 * add new service
 * remove existing service
++ filter service list by service name
 
 ## Transfer Config to New Master Key
 
@@ -56,14 +57,10 @@ ATTENTION: All service keys are changed!
 
 ## Feature Wishlist
 
-* improve mobile layout
-* filter table
-* improve display of QR code
 * display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
-* better promise chaining and event handling
 * smarter configuration file saving, upload, share, cloud store
-* hide keys per default, show only on request, auto-hide after some seconds, extra button for hidden copy action
+* hide keys per default, show only on request, auto-hide after some seconds
 
 # Example Configuration
 
