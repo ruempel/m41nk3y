@@ -70,7 +70,8 @@ function registerListeners() {
         const serviceElements = document.querySelector(".service-list").children;
         for (const service of serviceElements) {
             let classes = service.getAttribute("class");
-            if (service.querySelector(".service-name").innerText.includes(event.target.value)) {
+            const serviceNameLowerCase = service.querySelector(".service-name").innerText.toLowerCase();
+            if (serviceNameLowerCase.includes(event.target.value.toLowerCase())) {
                 classes = classes.replaceAll("hidden", "").trim();
             } else {
                 classes += classes.includes("hidden") ? "" : " " + "hidden";
