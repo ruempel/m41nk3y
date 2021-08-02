@@ -127,13 +127,13 @@ async function decryptConfig() {
         );
         const decodedConfig = Converter.decodeToText(configAsArrayBuffer);
         Config.services = JSON.parse(decodedConfig);
-        Util.replaceClasses("#decrypt-config", "btn-danger", "btn-success");
+        document.querySelector("#decrypt-config").classList.replace("btn-danger", "btn-success");
         Logger.debug("Decrypt services configuration for " + Config.services.length + " services (finished)");
         await deriveServiceKeys();
         document.querySelector("#filter-text").focus(); // move cursor to filter input without extra click
     } catch (result) {
         Logger.log("Wrong master key: " + result, "Wrong master key");
-        Util.replaceClasses("#decrypt-config", "btn-success", "btn-danger");
+        document.querySelector("#decrypt-config").classList.replace("btn-success", "btn-danger");
     }
 }
 
@@ -235,15 +235,15 @@ async function renderServiceToList(service) {
             iterationsCountElement.innerText = (iterationsCount - 1).toString();
         }
         if (iterationsCount - 1 === iterationsCountMinimum) {
-            Util.replaceClassesForElement(buttonDecrement, "", "disabled");
+            buttonDecrement.classList.add("disabled");
         }
     })
     if (parseInt(iterationsCountElement.innerHTML) <= iterationsCountMinimum) {
-        Util.replaceClassesForElement(buttonDecrement, "", "disabled");
+        buttonDecrement.classList.add("disabled");
     }
     fragment.querySelector(".action-iterations-increment").addEventListener("click", () => {
         iterationsCountElement.innerText = (parseInt(iterationsCountElement.innerText) + 1).toString();
-        Util.replaceClassesForElement(buttonDecrement, "disabled", "");
+        buttonDecrement.classList.remove("disabled");
     });
     serviceList.appendChild(fragment);
 }

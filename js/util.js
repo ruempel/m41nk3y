@@ -23,24 +23,4 @@ export default class Util {
         const element = document.querySelector(selector);
         element.addEventListener(event, listener);
     }
-
-    /**
-     * Removes and add classes of elements matching the selector.
-     *
-     * @param {string} selector selector for element to set the classes for
-     * @param {string} toRemove class to be removed
-     * @param {string} toAdd class to be added
-     */
-    static replaceClasses(selector, toRemove, toAdd) {
-        const element = document.querySelector(selector);
-        this.replaceClassesForElement(element, toRemove, toAdd);
-    }
-
-    static replaceClassesForElement(element, toRemove, toAdd) {
-        const classAttributeName = "class";
-        let classes = element.getAttribute(classAttributeName);
-        classes = classes.replaceAll(toRemove, "").trim();
-        classes += classes.includes(toAdd) ? "" : " " + toAdd;
-        element.setAttribute(classAttributeName, classes);
-    }
 }
