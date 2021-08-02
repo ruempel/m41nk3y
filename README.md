@@ -57,6 +57,8 @@ ATTENTION: All service keys are changed!
 
 ## Feature Wishlist
 
+* display service loading indicator
+* add button for clearing filter string
 * display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
 * smarter configuration file saving, upload, share, cloud store
@@ -64,7 +66,7 @@ ATTENTION: All service keys are changed!
 
 # Example Configuration
 
-The services configuration is a JSON array. Each element of this array is a JSON object with the following structure:
+The service configuration is a JSON array. Each element of this array is a JSON object with the following structure:
 `{name:"SERVICENAME", iterations: 1, pattern: "c16"}`
 
 For each service, the service name should identify a service with a domain. The iteration offset count starts at 1. It
