@@ -115,8 +115,8 @@ async function importMasterKey() {
  */
 async function decryptConfig() {
     const initVectorLength = 32;
-    const initVector = Converter.encodeFromHexString(Config.servicesEncrypted.substr(0, initVectorLength)); // extract init vector
-    const payload = Config.servicesEncrypted.substr(initVectorLength); // cut off init vector from payload
+    const initVector = Converter.encodeFromHexString(Config.servicesEncrypted.substring(0, initVectorLength)); // extract init vector
+    const payload = Config.servicesEncrypted.substring(initVectorLength); // cut off init vector from payload
     try {
         const configAsArrayBuffer = await window.crypto.subtle.decrypt(
             {name: "AES-CBC", iv: initVector},
