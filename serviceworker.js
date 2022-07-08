@@ -1,4 +1,4 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.1.5/workbox-sw.js");
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 
 if (workbox) {
     // register third-party resources
@@ -17,5 +17,5 @@ if (workbox) {
         new workbox.strategies.NetworkFirst()
     );
 } else {
-    console.warn("workbox did not load");
+    console.warn('workbox did not load');
 }
