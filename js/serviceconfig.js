@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Key management for multiple services. Service keys are derived based on a master key, a service name as salt and
  * an individually saved iterations count. Configuration for services is encrypted with master key as well.

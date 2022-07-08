@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Provides export functionality for browser download.
  *

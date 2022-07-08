@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Provides patterns based on character classes and lengths for keys to be derived.
  *

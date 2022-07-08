@@ -1,5 +1,3 @@
-"use strict";
-
 import Logger from "./logger.js";
 import Util from "./util.js";
 import Patterns from "./patterns.js";

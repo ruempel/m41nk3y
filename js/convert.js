@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * This converter provides string conversion utility functions.
  *
