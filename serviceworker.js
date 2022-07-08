@@ -1,6 +1,8 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 
 if (workbox) {
+    workbox.setConfig({debug: false});
+
     // register third-party resources
     workbox.routing.registerRoute(
         /^https:.+(?:popper|bootstrap|qrcode|fontawesome|gstatic).+(?:js|css|woff2)$/,
