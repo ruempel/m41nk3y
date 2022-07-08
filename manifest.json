@@ -1,6 +1,12 @@
 {
   "name": "m4st3rk3y Password Manager",
   "short_name": "m4st3rk3y",
+  "description": "m4st3rk3y password manager based on PBKDF2 with offline capability",
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#333333",
+  "theme_color": "#8bc34a",
   "icons": [
     {
       "src": "gfx/m4st3rk3y-icon-36.png",
@@ -22,10 +28,5 @@
       "sizes": "144x144",
       "type": "image/png"
     }
-  ],
-  "start_url": "index.html",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#333333",
-  "theme_color": "#8bc34a"
+  ]
 }
