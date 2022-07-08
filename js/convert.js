@@ -36,7 +36,7 @@ export default class {
         const hex = string.toString(); // force conversion
         const array = new Uint8Array(string.length / 2);
         for (let i = 0; i < hex.length; i += 2) {
-            array[i / 2] = parseInt(hex.substr(i, 2), 16);
+            array[i / 2] = parseInt(hex.substring(i, 2), 16);
         }
         return array;
     }

@@ -13,7 +13,7 @@ export default class Download {
         const limit = 120; // maximum line length
         let chunkedPayload = "";
         for (let i = 0; i < payload.length; i += limit) {
-            chunkedPayload += payload.substr(i, limit) + "%0A"; // add line breaks
+            chunkedPayload += payload.substring(i, limit) + "%0A"; // add line breaks
         }
 
         const downloadURI = "data:text/plain;charset=utf-8," + chunkedPayload;
