@@ -62,7 +62,6 @@ ATTENTION: All service keys are changed!
 * display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
 * smarter configuration file saving, upload, share, cloud store
-* hide keys per default, show only on request, auto-hide after some seconds
 
 # Example Configuration
 
