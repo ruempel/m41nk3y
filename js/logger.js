@@ -9,9 +9,9 @@ export default class Logger {
     }
 
     static log(message, notification = message) {
-        Notification.requestPermission().then(result => {
-            if (result === "granted") new Notification(notification);
-        });
+        // Notification.requestPermission().then(result => {
+        //     if (result === "granted") new Notification(notification);
+        // });
         console.log(message);
     }
 }
