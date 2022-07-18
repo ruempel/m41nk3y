@@ -64,7 +64,12 @@ i.label {
 }
 
 code {
+    visibility: hidden;
     color: #8bc34a;
     padding: 5px;
     border: white solid 1px;
+}
+
+code.revealed {
+    visibility: visible;
 }

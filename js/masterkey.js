@@ -194,13 +194,16 @@ async function renderServiceToList(service) {
     // fill service password and listeners for copy and qr code buttons
     const passwordElement = fragment.querySelector(".service-password code");
     passwordElement.innerText = serviceKey;
-    passwordElement.addEventListener("click", data => {
+    passwordElement.addEventListener('click', data => {
         selectElementText(data.target); // select key on click
     });
-    fragment.querySelector(".action-copy").addEventListener("click", () => {
+    fragment.querySelector('.action-copy').addEventListener('click', () => {
         navigator.clipboard.writeText(passwordElement.innerText);
     });
-    fragment.querySelector(".action-show-qrcode").addEventListener("click", () => {
+    fragment.querySelector('.action-reveal').addEventListener('click', () => {
+        passwordElement.classList.toggle('revealed');
+    });
+    fragment.querySelector('.action-show-qrcode').addEventListener('click', () => {
         showQrCode(serviceKey);
     });
 
