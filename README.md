@@ -44,7 +44,7 @@ names with an iteration count and a password pattern each.
 * import encrypted config from file
 * add new service
 * remove existing service
-+ filter service list by service name
+* filter service list by service name
 
 ## Transfer Config to New Master Key
 
