@@ -65,18 +65,26 @@ function registerListeners() {
 
     // register listener for filter change
     Util.addListener("#filter-text", "input", event => {
+        updateFilter(event.target.value.toLowerCase());
+    });
+
+    Util.addListener("#action-clear-filter", "click", () => {
+        document.querySelector("#filter-text").value = '';
+        updateFilter('');
+    });
+
+    function updateFilter(filterString) {
+        const hiddenClass = 'hidden';
         const serviceElements = document.querySelector(".service-list").children;
         for (const service of serviceElements) {
-            let classes = service.getAttribute("class");
             const serviceNameLowerCase = service.querySelector(".service-name").innerText.toLowerCase();
-            if (serviceNameLowerCase.includes(event.target.value.toLowerCase())) {
-                classes = classes.replaceAll("hidden", "").trim();
+            if (serviceNameLowerCase.includes(filterString)) {
+                service.classList.remove(hiddenClass);
             } else {
-                classes += classes.includes("hidden") ? "" : " " + "hidden";
+                service.classList.add(hiddenClass);
             }
-            service.setAttribute("class", classes);
         }
-    });
+    }
 
     // register click listener for new service input form elements
     Util.addListener("#add-new-service-name", "click", async () => {

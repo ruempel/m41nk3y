@@ -58,7 +58,6 @@ ATTENTION: All service keys are changed!
 ## Feature Wishlist
 
 * display service loading indicator
-* add button for clearing filter string
 * display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
 * smarter configuration file saving, upload, share, cloud store
