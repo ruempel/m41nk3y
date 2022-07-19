@@ -1,32 +1,25 @@
 {
-  "name": "m4st3rk3y Password Manager",
-  "short_name": "m4st3rk3y",
-  "description": "m4st3rk3y password manager based on PBKDF2 with offline capability",
+  "name": "ma1nk3y Password Manager",
+  "short_name": "ma1nk3y",
+  "description": "ma1nk3y password manager based on PBKDF2 with offline capability",
   "start_url": "index.html",
+  "id": "ma1nk3y",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#333333",
   "theme_color": "#8bc34a",
   "icons": [
     {
-      "src": "gfx/m4st3rk3y-icon-36.png",
-      "sizes": "36x36",
-      "type": "image/png"
+      "src": "gfx/m41nk3y-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "gfx/m4st3rk3y-icon-48.png",
-      "sizes": "48x48",
-      "type": "image/png"
-    },
-    {
-      "src": "gfx/m4st3rk3y-icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "gfx/m4st3rk3y-icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png"
+      "src": "gfx/m41nk3y-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

@@ -1,7 +1,5 @@
 /**
  * This converter provides string conversion utility functions.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
  */
 export default class {
     /**

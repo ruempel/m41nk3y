@@ -14,9 +14,7 @@ if ("serviceWorker" in navigator) {
 }
 
 /**
- * Management of configurable service keys using a master password and PBKDF2.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
+ * Management of configurable service keys using a main password and PBKDF2.
  */
 window.addEventListener('DOMContentLoaded', async () => {
     // check for APIs
@@ -45,20 +43,20 @@ function registerListeners() {
         }
     });
 
-    // register listeners for master key input field
+    // register listeners for main key input field
     async function checkChangedInput(event) {
-        await importMasterKey();
+        await importMainKey();
         if (event.key === "Enter") {
-            await decryptConfig(); // try decryption, when master key entered
+            await decryptConfig(); // try decryption, when main key entered
         }
     }
 
-    Util.addListener("#masterkey", "paste", checkChangedInput);
-    Util.addListener("#masterkey", "keypress", checkChangedInput);
+    Util.addListener("#m41nk3y", "paste", checkChangedInput);
+    Util.addListener("#m41nk3y", "keypress", checkChangedInput);
 
     // register listeners for buttons
     Util.addListener("#decrypt-config", "click", () => {
-        importMasterKey().then(decryptConfig);
+        importMainKey().then(decryptConfig);
     }); // try decryption, when button clicked
     Util.addListener("#derive-keys", "click", deriveServiceKeys);
     Util.addListener("#export-config", "click", encryptConfig);
@@ -102,14 +100,14 @@ function registerListeners() {
 
 /**
  * Imports the user secret from the password field to a CryptoKey object.
- * Stores the master key imported from user input to Config.userSecret.
+ * Stores the main key imported from user input to Config.userSecret.
  * Stores the AES key for config file decryption to Config.configKeyAES.
  */
-async function importMasterKey() {
-    Logger.debug("Import master key from user input");
-    Config.userSecret = await window.crypto.subtle.importKey( // create CryptoKey from input master password
+async function importMainKey() {
+    Logger.debug("Import main key from user input");
+    Config.userSecret = await window.crypto.subtle.importKey( // create CryptoKey from input main password
         "raw",
-        Converter.encodeFromText(document.querySelector("#masterkey").value.trim()),
+        Converter.encodeFromText(document.querySelector("#m41nk3y").value.trim()),
         "PBKDF2",
         false,
         ["deriveKey"]);
@@ -138,7 +136,7 @@ async function decryptConfig() {
         await deriveServiceKeys();
         document.querySelector("#filter-text").focus(); // move cursor to filter input without extra click
     } catch (result) {
-        Logger.log("Wrong master key: " + result, "Wrong master key");
+        Logger.log("Wrong main key: " + result, "Wrong main key");
         document.querySelector("#decrypt-config").classList.replace("btn-success", "btn-danger");
     }
 }
@@ -288,21 +286,21 @@ function selectElementText(element) {
 }
 
 /**
- * Derives configuration key or services keys from master key.
+ * Derives configuration key or services keys from main key.
  *
- * @param {CryptoKey} masterKey key to derive other key from
+ * @param {CryptoKey} mainKey key to derive other key from
  * @param {string} salt salt for key derivation
  * @param {number} iterations hashing iterations
  * @returns {PromiseLike<CryptoKey>} promise containing the derived key
  */
-function deriveKey(masterKey, salt, iterations) {
+function deriveKey(mainKey, salt, iterations) {
     return window.crypto.subtle.deriveKey({
             name: "PBKDF2",
             salt: Converter.encodeFromText(salt),
             iterations: iterations,
             hash: "SHA-512"
         },
-        masterKey,
+        mainKey,
         {name: "AES-CBC", length: 256},
         true,
         ["encrypt", "decrypt"]

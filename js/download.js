@@ -1,7 +1,5 @@
 /**
  * Provides export functionality for browser download.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
  */
 export default class Download {
     /**

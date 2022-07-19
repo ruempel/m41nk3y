@@ -1,7 +1,5 @@
 /**
  * Provides patterns based on character classes and lengths for keys to be derived.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
  */
 export default class {
     /**
