@@ -1,7 +1,5 @@
 /**
  * Provides functionality for console logging and notification.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
  */
 export default class Logger {
     static debug(message) {

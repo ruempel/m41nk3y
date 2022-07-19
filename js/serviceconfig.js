@@ -1,8 +1,6 @@
 /**
- * Key management for multiple services. Service keys are derived based on a master key, a service name as salt and
- * an individually saved iterations count. Configuration for services is encrypted with master key as well.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
+ * Key management for multiple services. Service keys are derived based on a main key, a service name as salt and
+ * an individually saved iterations count. Configuration for services is encrypted with main key as well.
  */
 /**
  * @typedef Service
@@ -14,7 +12,7 @@
 /**
  * @typedef Config
  * @type {object}
- * @property {CryptoKey} userSecret - the user's secret master key
+ * @property {CryptoKey} userSecret - the user's secret main key
  * @property {CryptoKey} configKeyAES - symmetric encryption and decryption of services configuration
  * @property {Service[]} services - JSON services configuration
  * @property {string} servicesEncrypted - JSON services configuration encrypted

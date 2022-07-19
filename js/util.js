@@ -1,7 +1,5 @@
 /**
  * Collection of utility methods.
- *
- * @author Andreas Rümpel <ruempel@gmail.com>
  */
 export default class Util {
     /**

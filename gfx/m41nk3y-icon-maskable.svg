@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="104.99999mm"
+   height="104.99999mm"
+   viewBox="-10 -10 125 125"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="m41nk3y-icon.svg"
+   inkscape:export-filename="..\..\..\..\ws\m4st3rk3y\gfx\m41nk3y-icon-512.png"
+   inkscape:export-xdpi="123.85525"
+   inkscape:export-ydpi="123.85525"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title3129">m41nk3y App Icon</title>
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="208.09142"
+     inkscape:cy="305.06607"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0.1"
+     fit-margin-left="0.1"
+     fit-margin-right="0.1"
+     fit-margin-bottom="0.1"
+     inkscape:showpageshadow="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:window-width="1346"
+     inkscape:window-height="1205"
+     inkscape:window-x="1724"
+     inkscape:window-y="140"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>m41nk3y App Icon</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Rümpel</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-52.624287,-44.000988)">
+    <circle
+       style="opacity:1;fill:#222222;fill-opacity:1;stroke:#8bc34a;stroke-width:5;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path4506"
+       cx="105.12428"
+       cy="96.500984"
+       r="49.999996" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;line-height:5.29167px;font-family:'Titillium Web';-inkscape-font-specification:'Titillium Web';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#aaaaaa;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="104.0836"
+       y="97.298813"
+       id="text824"><tspan
+         sodipodi:role="line"
+         id="tspan822"
+         x="104.0836"
+         y="97.298813"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:35.2778px;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro Bold';fill:#aaaaaa;fill-opacity:1;stroke-width:0.264583px">mk</tspan></text>
+    <rect
+       style="opacity:1;fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:0.529167;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:1.05833, 1.05833;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4508"
+       width="52.871468"
+       height="25"
+       x="78.688545"
+       y="107.95302"
+       rx="2.6435735"
+       ry="5" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.1663px;line-height:4.96084px;font-family:'Titillium Web';-inkscape-font-specification:'Titillium Web';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="105.12429"
+       y="137.99788"
+       id="text824-1"><tspan
+         sodipodi:role="line"
+         id="tspan822-5"
+         x="105.12429"
+         y="137.99788"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:33.0723px;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro Bold';fill:#333333;fill-opacity:1;stroke-width:0.264583px">***</tspan></text>
+  </g>
+</svg>

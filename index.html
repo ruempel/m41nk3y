@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>m4st3rk3y</title>
+    <title>m41nk3y</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta name="theme-color" content="#8bc34a"/>
     <link href="manifest.json" rel="manifest"/>
+    <link rel="apple-touch-icon" href="gfx/m41nk3y-icon-192.png">
     <script crossorigin="anonymous"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -16,16 +18,16 @@
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
           referrerpolicy="no-referrer" rel="stylesheet"/>
-    <script src="js/masterkey.js" type="module"></script>
-    <link href="css/masterkey.css" rel="stylesheet" type="text/css"/>
+    <script src="js/m41nk3y.js" type="module"></script>
+    <link href="css/m41nk3y.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
 <section>
     <form id="passwordform">
         <div class="input-group">
-            <input aria-label="master secret" autocomplete="off" autofocus class="form-control bg-dark text-light"
-                   id="masterkey" placeholder="master secret" type="password"/>
+            <input aria-label="main secret" autocomplete="off" autofocus class="form-control bg-dark text-light"
+                   id="m41nk3y" placeholder="main secret" type="password"/>
             <button class="btn btn-success" id="decrypt-config" type="button"><i class="fas fa-key label"></i> Show
             </button>
         </div>
@@ -43,7 +45,7 @@
 </section>
 
 <section class="service-list">
-    Please enter the master secret to show services.
+    Please enter the main secret to show services.
 </section>
 
 <template id="entry-template">

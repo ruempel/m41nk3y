@@ -1,19 +1,19 @@
-# m4st3rk3y Password Manager
+# m41nk3y Password Manager
 
-m4st3rk3y is a password manager generating reproducible random passwords for your services such as online accounts. It
+m41nk3y is a password manager generating reproducible random passwords for your services such as online accounts. It
 employs [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) and a user-specific configuration containing a list of service
 names with an iteration count and a password pattern each.
 
-![Screenshot of the m4st3rk3y Application](gfx/m4st3rk3y-screenshot.png)
+![Screenshot of the m41nk3y Application](gfx/m41nk3y-screenshot.png)
 
 ## Advantages
 
-* The m4st3rk3y application and your configuration file may be hosted publicly. Thus, they can be made accessible due to
+* The m41nk3y application and your configuration file may be hosted publicly. Thus, they can be made accessible due to
   the possibility of replication.
-* Key management can be performed completely offline. Your master secret does not need to be transferred over the
+* Key management can be performed completely offline. Your main secret does not need to be transferred over the
   network.
 * Service passwords are random, which prevents dictionary attacks.
-* You only have to memorize one master secret and no service passwords.
+* You only have to memorize one main secret and no service passwords.
 * No secret information is stored (in contrast to password safes).
 * Having one or more service passwords compromised, an attacker cannot access or effectively guess other service
   passwords.
@@ -28,11 +28,11 @@ names with an iteration count and a password pattern each.
 
 ## Disadvantages
 
-* With the m4st3rk3y application and the configuration file being public, the technology is vulnerable to offline brute
-  force and dictionary attacks on your master secret. Of course, your option is to keep the configuration secret.
-* With your master secret compromised, all service passwords can be derived, assuming the attacker has access to your
+* With the m41nk3y application and the configuration file being public, the technology is vulnerable to offline brute
+  force and dictionary attacks on your main secret. Of course, your option is to keep the configuration secret.
+* With your main secret compromised, all service passwords can be derived, assuming the attacker has access to your
   configuration file or guesses your service names, the pattern and the correct iteration count.
-* When changing your master secret, all service passwords change as well.
+* When changing your main secret, all service passwords change as well.
 
 # Features
 
@@ -46,14 +46,14 @@ names with an iteration count and a password pattern each.
 * remove existing service
 * filter service list by service name
 
-## Transfer Config to New Master Key
+## Transfer Config to New Main Key
 
 ATTENTION: All service keys are changed!
 
-* (optional) load existing config with old master key
-* input new master key
+* (optional) load existing config with old main key
+* input new main key
 * export encrypted config and set as active config
-* reload application and use with new master key
+* reload application and use with new main key
 
 ## Feature Wishlist
 
@@ -71,5 +71,5 @@ For each service, the service name should identify a service with a domain. The 
 may be incremented in case of a compromised service key. The pattern is one of the values of `Patterns.templates`
 from `js/patterns.js`.
 
-The example configuration file `data/config.txt` contains some example services. The example master password
+The example configuration file `data/config.txt` contains some example services. The example main password
 is `mT9GKQaN44AGV1vd`. Please do not reuse this password!
