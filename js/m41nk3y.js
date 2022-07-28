@@ -204,7 +204,7 @@ async function renderServiceToList(service) {
         selectElementText(data.target); // select key on click
     });
     fragment.querySelector('.action-copy').addEventListener('click', () => {
-        navigator.clipboard.writeText(passwordElement.innerText);
+        navigator.clipboard.writeText(passwordElement.textContent);
     });
     fragment.querySelector('.action-reveal').addEventListener('click', () => {
         passwordElement.classList.toggle('revealed');
