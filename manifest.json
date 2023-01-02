@@ -1,9 +1,9 @@
 {
-  "name": "ma1nk3y Password Manager",
-  "short_name": "ma1nk3y",
-  "description": "ma1nk3y password manager based on PBKDF2 with offline capability",
+  "name": "m41nk3y Password Manager",
+  "short_name": "m41nk3y",
+  "description": "m41nk3y password manager based on PBKDF2 with offline capability",
   "start_url": "index.html",
-  "id": "ma1nk3y",
+  "id": "m41nk3y",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#333333",
