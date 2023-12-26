@@ -224,16 +224,19 @@ async function renderServiceToList(service) {
         passwordElement.innerText = await getKey(service);
     });
 
-    // fill iterations config and
+    // fill iterations config and register change listener
     const iterationsCountElement = fragment.querySelector(".iterations-count");
     iterationsCountElement.innerText = service.iterations.toString();
-    iterationsCountElement.addEventListener("DOMSubtreeModified", async () => {
+
+    const iterationsCountObserver = new MutationObserver(async () => {
         const value = iterationsCountElement.innerText;
         if (value) {
             service.iterations = parseInt(iterationsCountElement.innerText);
             passwordElement.innerText = await getKey(service);
         }
     });
+    iterationsCountObserver.observe(iterationsCountElement, {childList: true});
+
     const iterationsCountMinimum = 1;
     const buttonDecrement = fragment.querySelector(".action-iterations-decrement");
     buttonDecrement.addEventListener("click", () => {
