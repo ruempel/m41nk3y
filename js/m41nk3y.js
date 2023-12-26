@@ -147,6 +147,9 @@ async function decryptConfig() {
 async function deriveServiceKeys() {
     document.querySelector(".service-list").textContent = ""; // remove all services from list
 
+    const progressLabel = document.querySelector("#decrypt-config");
+    const startTime = Date.now();
+    let servicesLoaded = 0;
     for (const service of Config.services) { // process all services configured
         let iterations = 1;
         if (service.iterations !== undefined && !isNaN(parseInt(service.iterations, 10))) {
@@ -155,7 +158,10 @@ async function deriveServiceKeys() {
             service.iterations = 1; // set iterations to 1 when missing
         }
         await renderServiceToList(service);
+        servicesLoaded++;
+        progressLabel.textContent = `${servicesLoaded.toString()} of ${Config.services.length} loaded`;
     }
+    progressLabel.textContent = `${servicesLoaded.toString()} loaded in ${Date.now() - startTime} ms`;
 }
 
 /**
@@ -200,9 +206,6 @@ async function renderServiceToList(service) {
     // fill service password and listeners for copy and qr code buttons
     const passwordElement = fragment.querySelector(".service-password code");
     passwordElement.innerText = serviceKey;
-    passwordElement.addEventListener('click', data => {
-        selectElementText(data.target); // select key on click
-    });
     fragment.querySelector('.action-copy').addEventListener('click', () => {
         navigator.clipboard.writeText(passwordElement.textContent);
     });
@@ -273,19 +276,6 @@ function showQrCode(text) {
     let qrCodeContainer = document.querySelector("#qrcode");
     qrCodeContainer.querySelector(".modal-content").innerHTML = qrCodeSvgTag;
     new bootstrap.Modal(qrCodeContainer).show();
-}
-
-/**
- * Selects text to copy easily.
- *
- * @param {Node} element DOM element containing text to be selected
- */
-function selectElementText(element) {
-    const range = document.createRange();
-    range.selectNodeContents(element);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
 }
 
 /**

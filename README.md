@@ -45,6 +45,7 @@ names with an iteration count and a password pattern each.
 * add new service
 * remove existing service
 * filter service list by service name
+* show secrets loading time
 
 ## Transfer Config to New Main Key
 
@@ -57,7 +58,6 @@ ATTENTION: All service keys are changed!
 
 ## Feature Wishlist
 
-* display service loading indicator
 * display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
 * smarter configuration file saving, upload, share, cloud store
