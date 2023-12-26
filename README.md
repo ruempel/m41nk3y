@@ -58,6 +58,7 @@ ATTENTION: All service keys are changed!
 
 ## Feature Wishlist
 
+* create CI pipeline to serve Web app as Docker container with custom config as volume
 * display software version and config version
 * clean up functionality code and build classes, move add and remove away from Config class
 * smarter configuration file saving, upload, share, cloud store
