@@ -1,8 +1,9 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js');
 
 if (workbox) {
     workbox.setConfig({debug: false});
 
+    // TODO update resources to self-delivered paths
     // register third-party resources
     workbox.routing.registerRoute(
         /^https:.+(?:popper|bootstrap|qrcode|fontawesome|gstatic).+(?:js|css|woff2)$/,

@@ -1,0 +1,9 @@
+services:
+  m41nk3y:
+    build: .
+    image: m41nk3y
+    restart: always
+    ports:
+      - "12200:80" #
+    volumes: # readonly volume for service config
+      - ./data/config.txt:/usr/share/nginx/html/data/config.txt:ro

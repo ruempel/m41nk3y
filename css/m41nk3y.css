@@ -1,8 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import "fonts.css";
 
 /** general and page */
 html {
     font-size: 20px;
+}
+
+.icon-centered {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 body {
@@ -72,4 +78,14 @@ code {
 
 code.revealed {
     visibility: visible;
+}
+
+.flex {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.va-middle {
+    vertical-align: middle;
 }

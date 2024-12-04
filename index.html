@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8"/>
     <title>m41nk3y</title>
@@ -7,18 +7,12 @@
     <meta content="#8bc34a" name="theme-color"/>
     <link href="manifest.json" rel="manifest"/>
     <link href="gfx/m41nk3y-icon-192.png" rel="apple-touch-icon">
-    <script crossorigin="anonymous"
-            integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A=="
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha512-kmjlA2TEbEAZE9olSe5hFng4Zm4MOjrVHHV10qalHkHKNT4wVvN3HNL4hmvpWm/qjUdxM8KeZTqSeKrchmlg0w=="
-            src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-          integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
-          rel="stylesheet">
-    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-          rel="stylesheet">
+
+    <!-- external dependencies, make sure to inject them properly -->
+    <script src="bootstrap.js"></script>
+    <script src="qrcode.js"></script>
+    <link href="bootstrap.css" rel="stylesheet">
+
     <script src="js/m41nk3y.js" type="module"></script>
     <link href="css/m41nk3y.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -27,9 +21,11 @@
 <section>
     <form id="passwordform">
         <div class="input-group">
-            <input aria-label="main secret" autocomplete="off" autofocus class="form-control bg-dark text-light"
+            <input autocomplete="off" autofocus class="form-control"
                    id="m41nk3y" placeholder="main secret" type="password"/>
-            <button class="btn btn-success" id="decrypt-config" type="button"><i class="fas fa-key label"></i> Show
+            <button class="btn btn-success icon-centered" id="decrypt-config" type="button"><span
+                    class="material-symbols-outlined">key</span>
+                Show
             </button>
         </div>
     </form>
@@ -37,10 +33,11 @@
 
 <section>
     <div class="input-group my-3">
-        <div class="input-group-text bg-dark text-light" id="filter-label">Filter</div>
-        <input aria-describedby="filter-label" aria-label="service filter" class="form-control bg-dark text-light"
-               id="filter-text"
-               placeholder="filter services by name" type="text"/>
+        <div class="input-group-text icon-centered" id="filter-label">
+            <span class="material-symbols-outlined">filter_alt</span>
+        </div>
+        <input class="form-control" id="filter-text" placeholder="filter services by name"
+               type="text"/>
         <button class="btn btn-secondary" id="action-clear-filter">Clear filter</button>
     </div>
 </section>
@@ -53,17 +50,23 @@
     <div class="service-entry">
         <div class="service-header">
             <div class="service-name"></div>
-            <button class="btn btn-outline-light action-delete"><i class='fas fa-trash'></i></button>
+            <button class="btn btn-outline-light action-delete">
+                <span class="material-symbols-outlined va-middle">delete</span>
+            </button>
         </div>
         <div class="service-details">
             <div class="service-password">
-                <button class="btn btn-outline-light action-copy"><i class='fas fa-copy'></i></button>
-                <button class="btn btn-outline-light action-reveal"><i class="fa-solid fa-eye-slash"></i></button>
-                <button class="btn btn-outline-light action-show-qrcode"><i class='fas fa-qrcode'></i></button>
+                <button class="btn btn-outline-light action-copy"><span
+                        class="material-symbols-outlined va-middle">content_copy</span></button>
+                <button class="btn btn-outline-light action-reveal">
+                    <span class="material-symbols-outlined va-middle">visibility_off</span>
+                </button>
+                <button class="btn btn-outline-light action-show-qrcode"><span
+                        class="material-symbols-outlined va-middle">qr_code</span></button>
                 <code></code>
             </div>
             <div class="service-settings">
-                <div><select class="form-control form-control-sm bg-dark text-light"></select></div>
+                <div><select class="form-control form-control-sm"></select></div>
                 <div>Iterations:
                     <button class="btn btn-primary btn-sm action-iterations-decrement">–</button>
                     <span class="iterations-count"></span>
@@ -76,21 +79,21 @@
 
 <section>
     <div class="input-group my-3">
-        <input aria-describedby="add-new-service-name" aria-label="service name" class="form-control bg-dark text-light"
-               id="new-service-name"
-               placeholder="service name" type="text"/>
-        <button class="btn btn-primary" id="add-new-service-name" type="button"><i class="fas fa-plus label"></i>
+        <input class="form-control" id="new-service-name" placeholder="service name" type="text"/>
+        <button class="btn btn-primary icon-centered" id="add-new-service-name" type="button">
+            <span class="material-symbols-outlined">add</span>
             Add new service
         </button>
     </div>
 </section>
 
-<section>
-    <button class="btn btn-secondary btn-sm" id="export-config" type="button"><i
-            class="fas fa-envelope-open-text label"></i>
+<section class="flex">
+    <button class="btn btn-secondary btn-sm icon-centered" id="export-config" type="button">
+        <span class="material-symbols-outlined">download</span>
         Export encrypted config
     </button>
-    <button class="btn btn-secondary btn-sm" id="derive-keys" type="button"><i class="fas fa-sync label"></i>
+    <button class="btn btn-secondary btn-sm icon-centered" id="derive-keys" type="button">
+        <span class="material-symbols-outlined">refresh</span>
         Re-derive
     </button>
 </section>
